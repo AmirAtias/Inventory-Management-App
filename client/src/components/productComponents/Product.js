@@ -142,6 +142,7 @@ const Product = () => {
           Quantity:
           </label>
           <input
+            type="number"
             css={inputCss}
             name="quantity"
             placeholder="enter the quantity of the proudct"
