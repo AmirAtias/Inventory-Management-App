@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "http://localhost:5000/products",
+  baseURL: "https://amiratias-inventorymanagement.herokuapp.com/products",
   responseType: "json",
   withCredentials: true,
 });

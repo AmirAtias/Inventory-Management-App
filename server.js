@@ -10,7 +10,7 @@ require('dotenv').config();
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:3000', 
+  origin: 'https://amiratias-inventorymanagement.herokuapp.com/', 
   credentials: true,
 }));
 app.use(express.json());
