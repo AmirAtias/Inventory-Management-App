@@ -1,15 +1,43 @@
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
-import { Button, Container } from "react-bootstrap";
-import { useForm } from "react-hook-form";
 import API from "../utils/API";
+import { Form, Input, InputNumber, Button } from 'antd';
+import 'antd/dist/antd.css';
+
+const layout = {
+  labelCol: {
+    span: 12,
+  },
+  wrapperCol: {
+    span: 16,
+  },
+};
+/* eslint-disable no-template-curly-in-string */
+
+const validateMessages = {
+  required: '${label} is required!',
+  types: {
+    number: '${label} is not a valid number!',
+  },
+  number: {
+    range: '${label} must be between greater then ${min}',
+  },
+};
+/* eslint-enable no-template-curly-in-string */
 
 const Product = () => {
-  const { register, handleSubmit,formState: { errors } } = useForm();
+   const formCss = css({
+    display: "flex",
+    alignItems: "center",
+    flexDirection:"column",
+    width:'100%'
+  });
   async function onSubmit(data) {
+    console.log('data' + JSON.stringify(data));
     try {
       const response = await API.post("/product", data);
       if (response.data.validationSuccess == 'true') {
+        window.alert("A new product has been created.");
         window.location.replace("/");
       } else {
         window.alert(data.message);
@@ -18,143 +46,103 @@ const Product = () => {
       window.alert(`😱 Axios request failed: ${e}`);
     }
   }
-
-  const formCss = css({
-    display: "flex",
-    flexFlow: "column wrap",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingTop: "0px",
-  });
-  const labelForm = css({
-    width: "75px",
-    fontFamily: "'Baloo 2', cursive",
-    fontSize: "1vw",
-    margin: "0px",
-  });
-  const inputCss = css({
-    width: "100%",
-    padding: "8px 20px",
-    margin: "8px 0",
-    border: "1px solid #ccc",
-    borderRadius: "2px",
-  });
-  const containerCss = css({
-    display: "flex",
-    flexFlow: "column wrap",
-    alignItems: "center",
-  });
   return (
-    <Container css={containerCss}>
-      <h3>Add Product</h3>
-      <form onSubmit={handleSubmit(onSubmit)} css={formCss}>
-        <div>
-       
-          <label css={labelForm} htmlFor="name">
-            Name:
-          </label>
-          {errors.name && <p> *name is required.</p>}
-          <input 
+    <div css={formCss}> 
+    <h1 style={{marginBottom:'0.5em',marginLeft:'1.5em',paddingTop: "0.1%",color:'black',textAlign:'center',fontSize:'4rem'}}>Add product</h1>
+
+    <Form {...layout} name="nest-messages" onFinish={onSubmit} validateMessages={validateMessages} >
+      <Form.Item
+        name={['product', 'name']}
+        label="Name"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name={['product', 'description']}
+        label="Description"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name={['product', 'supplierName']}
+        label="Supplier Name"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      
+      
+      <Form.Item name={['product', 'url']} label="Website">
+        <Input />
+      </Form.Item>
+      <Form.Item name={['product', 'picture']} label=" Picture url ">
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name={['product', 'ils']}
+        label="Price in ILS"
+        rules={[
+          {
+            type: 'number',
+            min: 0,
+            required: true
             
-            css={inputCss}
-            name="name"
-            placeholder="enter proudct name"
-            {...register("name",{ required: true })}
+          },
+        ]}
+      >
+        <InputNumber />
+      </Form.Item>
+      <Form.Item
+        name={['product', 'usd']}
+        label="Price in USD"
+        rules={[
+          {
+            type: 'number',
+            min: 0,
+            required: true
             
-          />
-           
-        </div>
-        <div>
-          <label css={labelForm} htmlFor="description">
-          Description:
-          </label>
-          <input
-            css={inputCss}
-            name="description"
-            placeholder="enter proudct description"
-            {...register("description")}
-          />
-        </div>
-        <div>
-          <label css={labelForm} htmlFor="supplierName">
-          Supplier Name:
-          </label>
-          <input
-            css={inputCss}
-            name="supplierName"
-            placeholder="enter supplier Name"
-            {...register("supplierName")}
+          },
+        ]}
+      >
+        <InputNumber />
+      </Form.Item>
+      <Form.Item
+        name={['product', 'quantity']}
+        label=" Quantity"
+        rules={[
+          {
+            type: 'number',
+            min: 0,
+            required: true
             
-          />
-        </div>
-        <div>
-          <label css={labelForm} htmlFor="ils">
-          Price in ILS:
-          </label>
-          <input
-            type="number"
-            css={inputCss}
-            name="ils"
-            placeholder="enter price in ILS"
-            {...register("ils")}
-            
-          />
-        </div>
-        <div>
-          <label css={labelForm} htmlFor="usd">
-          Price in USD:
-          </label>
-          <input
-            type="number"
-            css={inputCss}
-            name="usd"
-            placeholder="enter price in USD"
-            {...register("usd")}
-            
-          />
-        </div>
-        <div>
-          <label css={labelForm} htmlFor="url">
-            Url:
-          </label>
-          <input
-            css={inputCss}
-            name="url"
-            placeholder="enter prouduct url "
-            {...register("url")}
-            
-          />
-        </div>
-        <div>
-          <label css={labelForm} htmlFor="picture">
-            Picture:
-          </label>
-          <input
-            css={inputCss}
-            name="url"
-            placeholder="enter picture url of the proudct "
-            {...register("picture")}
-            
-          />
-        </div>
-        <div>
-          <label css={labelForm} htmlFor="quantity">
-          Quantity:
-          </label>
-          <input
-            type="number"
-            css={inputCss}
-            name="quantity"
-            placeholder="enter the quantity of the proudct"
-            {...register("quantity")}
-            
-          />
-        </div>
-        <Button css={labelForm} type="submit" variant="primary" size="lg">
+          },
+        ]}
+      >
+        <InputNumber />
+      </Form.Item>
+      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset:12 }}>
+        <Button type="primary" htmlType="submit" style={{marginTop:'1em'}}>
           Submit
-        </Button>{" "}
-      </form>
-    </Container>
+        </Button>
+      </Form.Item>
+    </Form>
+    </div>
+    
   );
+
 }
 export default Product;

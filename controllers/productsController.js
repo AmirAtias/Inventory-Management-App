@@ -6,14 +6,17 @@ exports.createProduct = async function (req, res) {
   try {
     let product = new Product();
     const { body } = req;
-    product.name = body.name;
-    product.description = body.description;
-    product.supplierName = body.supplierName;
-    product.priceUsd = body.usd;
-    product.priceIls = body.ils;
-    product.url = body.url;
-    product.picture = body.picture;
-    product.quantity = body.quantity;
+    
+    console.log('req' +JSON.stringify(body));
+    product.name = body.product.name;
+    product.description = body.product.description;
+    product.supplierName = body.product.supplierName;
+    product.priceUsd = body.product.usd;
+    product.priceIls = body.product.ils;
+    product.url = body.product.url;
+    product.picture = body.product.picture;
+    product.quantity = body.product.quantity;
+    console.log(product+'here');
     await product.save();
     let productHistory = new ProductHistory();
     productHistory.type = 'Insert';

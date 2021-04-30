@@ -1,5 +1,4 @@
 import { useEffect, useState,Fragment } from "react";
-import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,27 +14,15 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import API from "../utils/API";
 
-const useRowStyles = makeStyles({
-  root: {
-    '& > *': {
-      borderBottom: 'unset',
-    },
-  },
-});
-
 
 
 function Row(props) {  
-    
   const { row } = props;
   const [open, setOpen] = useState(false);
-  const classes = useRowStyles();
-    useEffect(() => {
-     
-    },[])  
+
   return (
     <Fragment>
-      <TableRow className={classes.root}>
+      <TableRow  >
         <TableCell>
           <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
@@ -44,11 +31,11 @@ function Row(props) {
         <TableCell component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell align="right">{row.description}</TableCell>
-        <TableCell align="right">{row.supplierName}</TableCell>
-        <TableCell align="right">{row.usd}</TableCell>
-        <TableCell align="right">{row.ils}</TableCell>
-        <TableCell align="right">{row.quantity}</TableCell>
+        <TableCell >{row.description}</TableCell>
+        <TableCell >{row.supplierName}</TableCell>
+        <TableCell >{row.usd}</TableCell>
+        <TableCell >{row.ils}</TableCell>
+        <TableCell >{row.quantity}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -94,7 +81,6 @@ export default function ProductHistory() {
         let rows = [];
         API.get(`/getAllProductsWithHistory`).then((res) => {
             if (res.status === 200) {
-              console.log('res.data.allProducts'+JSON.stringify(res.data.allProducts))
               res.data.allProducts.forEach(product =>
                 rows.push({ id:product._id,name: product.name, description: product.description,supplierName: product.supplierName, usd: product.priceUsd,ils:product.priceIls,quantity:product.quantity,history:product.productHistory}))
               setTableRows(rows);
@@ -111,17 +97,17 @@ export default function ProductHistory() {
           });;
     },[])
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
+    <TableContainer component={Paper} style={{backgroundColor :'#708090'}} >
+      <Table aria-label="collapsible table" style= {{width:'70%',margin:'0 auto'}} >
         <TableHead>
           <TableRow>
             <TableCell />
             <TableCell>Name</TableCell>
-            <TableCell align="right">Description</TableCell>
-            <TableCell align="right">Supplier Name</TableCell>
-            <TableCell align="right">USD</TableCell>
-            <TableCell align="right">ILS</TableCell>
-            <TableCell align="right">Quantity</TableCell>
+            <TableCell >Description</TableCell>
+            <TableCell >Supplier Name</TableCell>
+            <TableCell >USD</TableCell>
+            <TableCell >ILS</TableCell>
+            <TableCell >Quantity</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

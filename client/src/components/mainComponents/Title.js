@@ -2,8 +2,8 @@
 import { jsx, css } from '@emotion/react';
 function Title(props) {
   const titleText = css({
-    fontSize: "6vw",
-    fontWeight: "700",
+    fontSize: "4rem",
+    fontWeight: "4rem",
     color: "#fff",
     lineHeight: "1",
   });

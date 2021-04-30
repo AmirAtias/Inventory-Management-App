@@ -23,7 +23,6 @@ const ProductTable = () => {
           id: cell.id,
           quantity: cell.props.value
         });
-      console.log('response.status'+ response.status);
       if (response.status  == 200) {
         window.alert("update success!");
       } else {
@@ -57,8 +56,8 @@ const ProductTable = () => {
   return (
     
     <div style={{ height: 400, width: '50%' , marginLeft:'22%'}}>
-      <h2 style = {{color: 'blue'}}>Product Table</h2>
-      <h3 style = {{color: 'blue'}}>click on quantity for edit !</h3>
+      <h2 style = {{color: 'black'}}>Product Table</h2>
+      <h3 style = {{color: 'black'}}>click on quantity for edit !</h3>
       <DataGrid rows={tableRows} columns={columns} pageSize={10} 
       onEditCellChangeCommitted = {(cell) =>{
         updateProducts(cell)}} />
